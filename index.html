@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Applications — Natchi's Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0A0A0F; --bg2: #111118; --bg3: #1a1a24;
+      --glass: rgba(255,255,255,0.04); --glass-border: rgba(255,255,255,0.08);
+      --violet: #7C3AED; --violet-light: #A78BFA; --violet-dim: rgba(124,58,237,0.15);
+      --green: #10B981; --green-dim: rgba(16,185,129,0.12);
+      --amber: #F59E0B; --amber-dim: rgba(245,158,11,0.12);
+      --red: #EF4444; --red-dim: rgba(239,68,68,0.12);
+      --blue: #3B82F6; --blue-dim: rgba(59,130,246,0.12);
+      --grey: #6B7280; --grey-dim: rgba(107,114,128,0.12);
+      --purple: #8B5CF6; --purple-dim: rgba(139,92,246,0.12);
+      --text: #F1F0F5; --text-muted: #9CA3AF; --text-dim: #6B7280;
+      --radius: 14px; --radius-sm: 8px;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; }
+
+    header { padding: 32px 24px 0; max-width: 1400px; margin: 0 auto; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 6px; }
+    h1 { font-size: 1.5rem; font-weight: 700; }
+    h1 span { color: var(--violet-light); }
+    .header-meta { font-size: 0.8rem; color: var(--text-dim); }
+
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; max-width: 1400px; margin: 20px auto 0; padding: 0 24px; }
+    .stat { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 14px; text-align: center; }
+    .stat-num { font-size: 1.8rem; font-weight: 700; }
+    .stat-label { font-size: 0.68rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+    .stat.green .stat-num { color: var(--green); }
+    .stat.amber .stat-num { color: var(--amber); }
+    .stat.red .stat-num { color: var(--red); }
+    .stat.blue .stat-num { color: var(--blue); }
+    .stat.purple .stat-num { color: var(--purple); }
+    .stat.grey .stat-num { color: var(--grey); }
+
+    .urgent-banner { max-width: 1400px; margin: 16px auto 0; padding: 0 24px; }
+    .urgent-inner { background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.25); border-radius: var(--radius); padding: 14px 18px; }
+    .urgent-title { font-size: 0.8rem; font-weight: 600; color: var(--amber); margin-bottom: 8px; }
+    .urgent-items { display: flex; flex-wrap: wrap; gap: 8px; }
+    .urgent-chip { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); border-radius: 20px; padding: 4px 12px; font-size: 0.73rem; color: var(--amber); }
+
+    .controls { max-width: 1400px; margin: 16px auto 0; padding: 0 24px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+    .filter-btn { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text-muted); cursor: pointer; transition: all .15s; font-family: inherit; }
+    .filter-btn:hover, .filter-btn.active { background: var(--violet-dim); border-color: var(--violet); color: var(--violet-light); }
+    .search-wrap { margin-left: auto; }
+    .search-input { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; color: var(--text); font-family: inherit; outline: none; width: 200px; transition: border-color .15s; }
+    .search-input:focus { border-color: var(--violet); }
+    .search-input::placeholder { color: var(--text-dim); }
+
+    main { max-width: 1400px; margin: 16px auto 40px; padding: 0 24px; }
+    .section-title { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin: 28px 0 12px; display: flex; align-items: center; gap: 8px; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 12px; }
+
+    .card { background: var(--bg2); border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 18px; display: flex; flex-direction: column; gap: 10px; transition: border-color .15s, background .15s; position: relative; overflow: hidden; }
+    .card:hover { border-color: rgba(255,255,255,0.14); background: var(--bg3); }
+    .card.urgent-card { border-color: rgba(245,158,11,0.3); }
+    .card.urgent-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--amber); }
+
+    .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+    .company { font-weight: 600; font-size: 0.95rem; }
+    .role { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
+
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+    .badge.submitted  { background: var(--green-dim); color: var(--green); }
+    .badge.action     { background: var(--amber-dim); color: var(--amber); }
+    .badge.login      { background: var(--blue-dim); color: var(--blue); }
+    .badge.found      { background: var(--purple-dim); color: var(--purple); }
+    .badge.closed     { background: var(--grey-dim); color: var(--grey); }
+
+    .urgent-tag { display: inline-flex; align-items: center; gap: 4px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.25); border-radius: 6px; padding: 2px 8px; font-size: 0.68rem; color: var(--amber); font-weight: 600; }
+
+    .card-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .meta-pill { background: var(--glass); border: 1px solid var(--glass-border); border-radius: 6px; padding: 2px 8px; font-size: 0.7rem; color: var(--text-dim); }
+    .meta-pill.salary { color: var(--green); border-color: rgba(16,185,129,0.2); background: rgba(16,185,129,0.05); }
+
+    .notes { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; background: rgba(255,255,255,0.02); border-radius: var(--radius-sm); padding: 8px 10px; border-left: 2px solid var(--glass-border); }
+    .notes.urgent-notes { border-left-color: var(--amber); }
+
+    .card-link { font-size: 0.75rem; color: var(--violet-light); text-decoration: none; display: inline-flex; align-items: center; gap: 4px; opacity: 0.8; transition: opacity .15s; }
+    .card-link:hover { opacity: 1; }
+
+    .empty { text-align: center; padding: 40px; color: var(--text-dim); font-size: 0.85rem; }
+    .hidden { display: none !important; }
+
+    footer { text-align: center; padding: 24px; color: var(--text-dim); font-size: 0.75rem; border-top: 1px solid var(--glass-border); margin-top: 20px; }
+    footer a { color: var(--violet-light); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .stats { grid-template-columns: repeat(3, 1fr); }
+      .grid { grid-template-columns: 1fr; }
+      .search-wrap { width: 100%; }
+      .search-input { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-top">
+    <h1>Natchi's <span>Job Hunt</span> 🐙</h1>
+    <div class="header-meta">nathiellegouvea@gmail.com · pickypixels.studio</div>
+  </div>
+  <div style="font-size:0.75rem;color:var(--text-dim)">Last updated: Tue 2026-03-17 by Moshi #3</div>
+</header>
+
+<div class="stats">
+  <div class="stat green"><div class="stat-num" id="cnt-submitted">0</div><div class="stat-label">Submitted</div></div>
+  <div class="stat amber"><div class="stat-num" id="cnt-action">0</div><div class="stat-label">Needs action</div></div>
+  <div class="stat blue"><div class="stat-num" id="cnt-login">0</div><div class="stat-label">Needs login</div></div>
+  <div class="stat purple"><div class="stat-num" id="cnt-found">0</div><div class="stat-label">Found / Queue</div></div>
+  <div class="stat grey"><div class="stat-num" id="cnt-closed">0</div><div class="stat-label">Closed</div></div>
+  <div class="stat"><div class="stat-num" id="cnt-total">0</div><div class="stat-label">Total tracked</div></div>
+</div>
+
+<div class="urgent-banner" id="urgent-banner" style="display:none">
+  <div class="urgent-inner">
+    <div class="urgent-title">⚡ Urgent — needs your attention now</div>
+    <div class="urgent-items" id="urgent-items"></div>
+  </div>
+</div>
+
+<div class="controls">
+  <span style="font-size:0.75rem;color:var(--text-dim)">Filter:</span>
+  <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="submitted">✅ Submitted</button>
+  <button class="filter-btn" data-filter="action">⚠️ Needs action</button>
+  <button class="filter-btn" data-filter="login">🔑 Needs login</button>
+  <button class="filter-btn" data-filter="found">🔍 Found / Queue</button>
+  <button class="filter-btn" data-filter="closed">❌ Closed</button>
+  <div class="search-wrap">
+    <input class="search-input" id="search" placeholder="Search company or role..." type="text" />
+  </div>
+</div>
+
+<main id="main-content"></main>
+
+<footer>Moshi #3 🐙 · <a href="https://nathielle-jobs.netlify.app">nathielle-jobs.netlify.app</a> · CV: <a href="https://pickypixels.studio">pickypixels.studio</a></footer>
+
+<script>
+const JOBS = [
+  // ─── SUBMITTED ───────────────────────────────────────────────
+  {
+    id:1, company:"Engine AI", role:"Graphic / Web Designer",
+    status:"submitted", date:"2026-03-16", method:"LinkedIn Easy Apply", salary:"",
+    url:"https://www.linkedin.com/jobs/view/4381985195/",
+    notes:"Submitted via LinkedIn Easy Apply. Application status confirmed as submitted.",
+    urgent:false
+  },
+  {
+    id:2, company:"Level", role:"Frontend Engineer",
+    status:"submitted", date:"2026-03-16", method:"Tally form", salary:"$180k (senior)",
+    url:"https://tally.so/r/ODAKrA",
+    notes:"Fully filled and submitted via Tally. Confirmation: 'Thanks for completing this form!' — detailed answers about pickypixels.studio, AI workflow, state management.",
+    urgent:false
+  },
+  {
+    id:3, company:"Douro Labs", role:"Design Lead",
+    status:"submitted", date:"2026-03-16", method:"Ashby", salary:"",
+    url:"https://jobs.ashbyhq.com/dourolabs.xyz/b40f164c-18fc-4cd5-8899-553758c86573",
+    notes:"Submitted via Ashby. Application confirmed: 'Your application was successfully submitted.' Porto office connection mentioned in cover answers.",
+    urgent:false
+  },
+  {
+    id:4, company:"Brave", role:"Software Engineer UI (Sr.)",
+    status:"submitted", date:"2026-03-16", method:"Greenhouse", salary:"",
+    url:"https://job-boards.greenhouse.io/brave/jobs/7636723",
+    notes:"Submitted via Greenhouse. Confirmed: 'Thank you for applying with Brave. Your application has been received.' Remote worldwide.",
+    urgent:false
+  },
+  {
+    id:5, company:"FS Studio", role:"WordPress Web Developer",
+    status:"submitted", date:"2026-03-17", method:"Ashby", salary:"$3500/month",
+    url:"https://jobs.ashbyhq.com/fs-studio/92ba03c7-b5cc-40bb-abc6-e8e5b3c5cfa8",
+    notes:"Submitted today by Moshi. Name, email, CV, availability (40h/week), rate ($3500/month) all filled. Application confirmed.",
+    urgent:false
+  },
+
+  // ─── NEEDS YOUR ACTION ───────────────────────────────────────
+  {
+    id:6, company:"Tarlogic", role:"Web Designer & Frontend Developer",
+    status:"action", date:"2026-03-17", method:"TalentClue form", salary:"€36k–39k/yr",
+    url:"https://tarlogic.talentclue.com/es/node/add/cv/job/123318722/company/33708628/66909823?clicked_button=apply_manually",
+    notes:"Form 100% filled by Moshi (email, phone, name, Porto, Licenciatura, portfolio, frontend skills, salary, English C1, privacy ticked, CV uploaded). ONLY reCAPTCHA blocking. Open URL and solve captcha to submit.",
+    urgent:true, urgentLabel:"Solve captcha"
+  },
+  {
+    id:7, company:"ELECTE S.R.L.", role:"Full-Stack Developer",
+    status:"action", date:"2026-03-17", method:"Email", salary:"€2500–3500/month",
+    url:"",
+    notes:"Email anne.anderson@electe.net · Subject: 'Full-Stack Developer @ ELECTE S.R.L.' · Must include word CHEAPER somewhere in the email. Attach CV. Stack: TypeScript, Next.js, Supabase, Vercel.",
+    urgent:true, urgentLabel:"Send email"
+  },
+  {
+    id:8, company:"MapTiler", role:"Senior UX/UI Designer (Web)",
+    status:"action", date:"2026-03-17", method:"Email", salary:"€25–35/hr contract",
+    url:"https://weworkremotely.com/remote-jobs/maptiler-senior-ux-ui-designer-web-mapping-tech-remote-in-europe",
+    notes:"Email jobs@maptiler.com · Subject: 'Senior UX/UI Designer (Web) Application' · Include portfolio + CV. Portugal explicitly included. Deadline: April 9.",
+    urgent:false, urgentLabel:"Send email"
+  },
+  {
+    id:9, company:"KillerSpots Agency", role:"WordPress Developer (Remote)",
+    status:"action", date:"2026-03-16", method:"Email / JazzHR", salary:"",
+    url:"http://killerspotscominc.applytojob.com/apply/9fHEekpSXz/WordPress-Developer-RemoteUSA",
+    notes:"JazzHR form blocked by reCAPTCHA. Alternative: email hr@killerspots.com with portfolio link pickypixels.studio. 100% remote from anywhere.",
+    urgent:false, urgentLabel:"Send email"
+  },
+  {
+    id:10, company:"Typeform", role:"Senior Product Designer (Typeform AI)",
+    status:"action", date:"2026-03-17", method:"Greenhouse", salary:"",
+    url:"https://job-boards.greenhouse.io/typeform/jobs/7510928",
+    notes:"Form partially filled by Moshi (name, email, CV attached, Portugal=Yes, no sponsorship needed, portfolio, LinkedIn). Needs phone country + GDPR dropdown + final submit. Portugal Remote listed explicitly.",
+    urgent:false, urgentLabel:"Finish & submit"
+  },
+  {
+    id:11, company:"Canonical", role:"UX Designer - Infrastructure",
+    status:"action", date:"2026-03-17", method:"Canonical careers", salary:"",
+    url:"https://canonical.com/careers/6072086/apply",
+    notes:"Requires detailed written answers. DEADLINE MARCH 21. Their policy: NO AI-generated content — must answer all questions manually in your own words. EMEA remote, Portugal eligible.",
+    urgent:true, urgentLabel:"Deadline Mar 21"
+  },
+  {
+    id:12, company:"Canonical", role:"UX Designer - Design Systems",
+    status:"action", date:"2026-03-17", method:"Canonical careers", salary:"",
+    url:"https://canonical.com/careers/7043028",
+    notes:"Same form structure as Infrastructure role. EMEA remote. No listed deadline.",
+    urgent:false
+  },
+  {
+    id:13, company:"Canonical", role:"Visual Designer",
+    status:"action", date:"2026-03-17", method:"Canonical careers", salary:"",
+    url:"https://canonical.com/careers/5326986",
+    notes:"Same form as other Canonical roles. EMEA remote. No listed deadline.",
+    urgent:false
+  },
+
+  // ─── NEEDS YOUR LOGIN ────────────────────────────────────────
+  {
+    id:14, company:"Growmodo", role:"Graphic Designer / AI Specialist",
+    status:"login", date:"2026-03-16", method:"Growmodo careers (hCaptcha)", salary:"",
+    url:"https://careers.growmodo.com/o/graphic-designer-ai-expert/c/new",
+    notes:"Form 100% pre-filled by Moshi (name, email, phone, LinkedIn, portfolio, CV uploaded, legal accepted). Blocked by hCaptcha only. Open URL and solve captcha to submit.",
+    urgent:false
+  },
+  {
+    id:15, company:"Represent Studio", role:"UI Designer for Motion & Animation",
+    status:"login", date:"2026-03-16", method:"Dribbble", salary:"$3500–5000/month",
+    url:"https://dribbble.com/jobs/301529-UI-Designer-for-Motion-Animation",
+    notes:"Requires logged-in Dribbble account. Figma required, motion design a bonus. Apply by sharing portfolio examples.",
+    urgent:false
+  },
+  {
+    id:16, company:"ContrastUX", role:"Freelance Design Systems Designer",
+    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
+    url:"https://dribbble.com/jobs/301397-Freelance-Design-Systems-Designer",
+    notes:"Requires Dribbble account. Role explicitly mentions Figma, Cursor, Claude Code, AI workflows — perfect match.",
+    urgent:false
+  },
+  {
+    id:17, company:"ContrastUX", role:"Freelance AI Prototype Designer",
+    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
+    url:"https://dribbble.com/jobs/275394-Freelance-AI-Prototype-Designer",
+    notes:"Requires Dribbble account. Needs advanced Figma prototyping + AI tool usage examples.",
+    urgent:false
+  },
+  {
+    id:18, company:"GetTruckDrivers.com", role:"Brand & UI/UX Designer",
+    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
+    url:"https://dribbble.com/jobs/303278-Brand-UI-UX-Designer",
+    notes:"Requires Dribbble account. Figma-to-production, landing pages, full design ownership.",
+    urgent:false
+  },
+  {
+    id:19, company:"BetterMe", role:"AI Creative Designer",
+    status:"login", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
+    url:"https://weworkremotely.com/remote-jobs/betterme-ai-creative-designer",
+    notes:"Requires WeWorkRemotely account to apply.",
+    urgent:false
+  },
+  {
+    id:20, company:"Influee", role:"Product & Marketing Designer",
+    status:"login", date:"2026-03-16", method:"Wellfound", salary:"€38k–55k",
+    url:"https://wellfound.com/jobs/3975806-product-marketing-designer",
+    notes:"TOP PRIORITY. Form 95% filled by Moshi but Wellfound requires login. Log in at wellfound.com first then complete application. EU Remote.",
+    urgent:false, urgentLabel:"Log in to Wellfound"
+  },
+
+  // ─── FOUND / QUEUE ───────────────────────────────────────────
+  {
+    id:21, company:"Kapa.ai (YC S23)", role:"Founding Designer",
+    status:"found", date:"2026-03-16", method:"YC Work at a Startup", salary:"$75k–125k + equity",
+    url:"https://www.ycombinator.com/companies/kapa-ai/jobs/lPYIksu-founding-designer",
+    notes:"EU Remote (PT not listed but worth asking). AI startup building assistants for dev tools. AI-native workflow is perfect fit. Apply via YC Work at a Startup profile.",
+    urgent:false
+  },
+  {
+    id:22, company:"Jiga (YC W21)", role:"Product Designer",
+    status:"found", date:"2026-03-16", method:"YC Work at a Startup", salary:"$70k–130k + equity",
+    url:"https://www.ycombinator.com/companies/jiga/jobs/Cco7vyK-product-designer-remote-europe",
+    notes:"EU Remote. First product designer hire at YC-backed parts marketplace. Needs YC Work at a Startup profile to apply.",
+    urgent:false
+  },
+  {
+    id:23, company:"Algrano", role:"Product Designer",
+    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
+    url:"https://weworkremotely.com/remote-jobs/algrano-product-designer",
+    notes:"Worldwide remote. B2B coffee marketplace, 50+ person company. Requires WWR account to get apply link.",
+    urgent:false
+  },
+  {
+    id:24, company:"TimeZest", role:"Product Designer",
+    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
+    url:"https://weworkremotely.com/remote-jobs/timezest-product-designer",
+    notes:"Anywhere worldwide. React, TypeScript, Tailwind stack. Try boards.greenhouse.io/timezest directly. May have passed deadline.",
+    urgent:false
+  },
+  {
+    id:25, company:"Stacksync (YC W24)", role:"Designer - Enterprise Software",
+    status:"found", date:"2026-03-16", method:"YC Jobs", salary:"",
+    url:"https://www.ycombinator.com/companies/stacksync",
+    notes:"YC-backed enterprise sync tool. Check YC jobs page for application link.",
+    urgent:false
+  },
+  {
+    id:26, company:"Search Dates", role:"Senior Product Designer",
+    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"$100k+",
+    url:"https://weworkremotely.com/remote-jobs/search-dates-senior-product-designer-1",
+    notes:"Anywhere worldwide. Senior level but worth a try. Requires WWR account.",
+    urgent:false
+  },
+  {
+    id:27, company:"Typeform", role:"Senior Product Designer - Integrations",
+    status:"found", date:"2026-03-17", method:"Greenhouse", salary:"",
+    url:"https://job-boards.greenhouse.io/typeform/jobs/7721487",
+    notes:"Second Typeform design role. Portugal remote. Same application structure as the AI role.",
+    urgent:false
+  },
+  {
+    id:28, company:"Typeform", role:"Product Designer Formless",
+    status:"found", date:"2026-03-17", method:"Greenhouse", salary:"",
+    url:"https://job-boards.greenhouse.io/typeform/jobs/7510869",
+    notes:"Third Typeform design role. Portugal remote. Same application structure.",
+    urgent:false
+  },
+
+  // ─── AI-NATIVE / AGENTIC CODING ROLES ───────────────────────
+  {
+    id:31, company:"Toku", role:"Full-Stack Software Engineer",
+    status:"found", date:"2026-03-17", method:"RemoteOK", salary:"",
+    url:"https://remoteok.com/remote-jobs/remote-full-stack-software-engineer-toku-1128172",
+    notes:"Explicitly mentions Cursor as a team tool: 'Hands-on with AI-assisted development (Copilot, Cursor, Devin). Experience with Cursor is a plus, we use it as a team.' TypeScript + React/Next.js + Node.js + Postgres. Worldwide remote. PERFECT AI-native fit.",
+    urgent:false
+  },
+  {
+    id:32, company:"A.Team", role:"Senior Independent AI Engineer / Architect",
+    status:"found", date:"2026-03-17", method:"Remotive", salary:"$120–$170/hr",
+    url:"https://remotive.com/remote-jobs/software-development/senior-independent-ai-engineer-architect-1919266",
+    notes:"Invite-only network for senior builders. Contract missions with Fortune 500s and top startups. Americas + Europe eligible. $120–170/hr, you keep 100%. LLMs, AI agents, NLP, ML infra. Apply at a.team to join the network.",
+    urgent:false
+  },
+  {
+    id:33, company:"XXIX (garden3d)", role:"Senior Product Designer",
+    status:"found", date:"2026-03-17", method:"Remotive", salary:"$85–$150/hr contract",
+    url:"https://remotive.com/remote-jobs/design/senior-product-designer-2088647",
+    notes:"Worker-owned creative collective. Clients: Google, Stripe, Figma, Mozilla, MIT. AI-enabled interfaces + IoT + digital products. Worldwide remote contract. $85–150/hr. Portfolio-driven application.",
+    urgent:false
+  },
+  {
+    id:34, company:"Sendbird", role:"AI Agent Engineer, Internal Operations",
+    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$150k–$190k",
+    url:"https://www.workatastartup.com/jobs",
+    notes:"YC W16. Building AI agents. San Mateo CA but worth checking remote options. Apply via YC Work at a Startup profile.",
+    urgent:false
+  },
+  {
+    id:35, company:"Varos (YC S21)", role:"Senior Full Stack Engineer",
+    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$90k–$150k",
+    url:"https://www.workatastartup.com/jobs",
+    notes:"AI Business Analysts to gather requirements and optimize processes. Remote US/Israel. Apply via YC Work at a Startup.",
+    urgent:false
+  },
+  {
+    id:36, company:"Alinea (YC W21)", role:"Founding AI Engineer",
+    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$160k–$200k",
+    url:"https://www.workatastartup.com/jobs",
+    notes:"Automated investing for next generation. Full stack AI founding engineer role. New York but check remote. Apply via YC Work at a Startup.",
+    urgent:false
+  },
+
+  // ─── CLOSED ──────────────────────────────────────────────────
+  {
+    id:29, company:"Everywhen", role:"Junior Web Developer",
+    status:"closed", date:"2026-03-17", method:"LinkedIn", salary:"",
+    url:"https://www.linkedin.com/jobs/view/4383092984/",
+    notes:"No longer accepting applications.",
+    urgent:false
+  },
+  {
+    id:30, company:"Fuelerate", role:"CRO-Focused Web Designer",
+    status:"closed", date:"2026-03-17", method:"LinkedIn", salary:"",
+    url:"https://www.linkedin.com/jobs/view/4361480726/",
+    notes:"No longer accepting applications.",
+    urgent:false
+  },
+];
+
+const STATUS_LABEL = { submitted:"✅ Submitted", action:"⚠️ Needs action", login:"🔑 Needs login", found:"🔍 Found", closed:"❌ Closed" };
+const SECTION_ORDER = ["submitted","action","login","found","closed"];
+const SECTION_TITLES = { submitted:"Submitted", action:"Needs your action", login:"Needs your login", found:"Found — in queue to apply", closed:"Closed / No longer accepting" };
+
+let currentFilter = "all";
+let searchQuery = "";
+
+function render() {
+  const main = document.getElementById("main-content");
+
+  let filtered = JOBS.filter(j => {
+    const matchFilter = currentFilter === "all" || j.status === currentFilter;
+    const q = searchQuery.toLowerCase();
+    const matchSearch = !q || j.company.toLowerCase().includes(q) || j.role.toLowerCase().includes(q) || j.notes.toLowerCase().includes(q);
+    return matchFilter && matchSearch;
+  });
+
+  // counts (always full)
+  const counts = { submitted:0, action:0, login:0, found:0, closed:0 };
+  JOBS.forEach(j => counts[j.status]++);
+  document.getElementById("cnt-submitted").textContent = counts.submitted;
+  document.getElementById("cnt-action").textContent = counts.action;
+  document.getElementById("cnt-login").textContent = counts.login;
+  document.getElementById("cnt-found").textContent = counts.found;
+  document.getElementById("cnt-closed").textContent = counts.closed;
+  document.getElementById("cnt-total").textContent = JOBS.length;
+
+  // urgent banner
+  const urgents = JOBS.filter(j => j.urgent);
+  const banner = document.getElementById("urgent-banner");
+  if (urgents.length) {
+    banner.style.display = "block";
+    document.getElementById("urgent-items").innerHTML = urgents.map(j =>
+      `<span class="urgent-chip">⚡ ${j.company}: ${j.urgentLabel}</span>`
+    ).join("");
+  }
+
+  // cards
+  let html = "";
+  const sections = currentFilter === "all" ? SECTION_ORDER : [currentFilter];
+  sections.forEach(sec => {
+    const jobs = filtered.filter(j => j.status === sec);
+    if (!jobs.length) return;
+    html += `<div class="section-title">${SECTION_TITLES[sec]} <span style="color:var(--text-dim);font-weight:400;text-transform:none;letter-spacing:0;font-size:0.85em">(${jobs.length})</span></div><div class="grid">`;
+    jobs.forEach(j => {
+      html += `<div class="card ${j.urgent ? "urgent-card" : ""}">
+        <div class="card-top">
+          <div><div class="company">${j.company}</div><div class="role">${j.role}</div></div>
+          <span class="badge ${j.status}">${STATUS_LABEL[j.status]}</span>
+        </div>
+        <div class="card-meta">
+          <span class="meta-pill">📅 ${j.date}</span>
+          <span class="meta-pill">🔗 ${j.method}</span>
+          ${j.salary ? `<span class="meta-pill salary">💰 ${j.salary}</span>` : ""}
+          ${j.urgent ? `<span class="urgent-tag">⚡ ${j.urgentLabel}</span>` : ""}
+        </div>
+        <div class="notes ${j.urgent ? "urgent-notes" : ""}">${j.notes}</div>
+        ${j.url ? `<a href="${j.url}" target="_blank" class="card-link">Open listing ↗</a>` : ""}
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  if (!html) html = `<div class="empty">No applications match your search.</div>`;
+  main.innerHTML = html;
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById("search").addEventListener("input", e => {
+  searchQuery = e.target.value;
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
