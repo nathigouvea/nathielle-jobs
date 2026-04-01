@@ -149,198 +149,6 @@
 
 <script>
 const JOBS = [
-  // ─── SUBMITTED ───────────────────────────────────────────────
-  {
-    id:1, company:"Engine AI", role:"Graphic / Web Designer",
-    status:"submitted", date:"2026-03-16", method:"LinkedIn Easy Apply", salary:"",
-    url:"https://www.linkedin.com/jobs/view/4381985195/",
-    notes:"Submitted via LinkedIn Easy Apply. Application status confirmed as submitted.",
-    urgent:false
-  },
-  {
-    id:2, company:"Level", role:"Frontend Engineer",
-    status:"submitted", date:"2026-03-16", method:"Tally form", salary:"$180k (senior)",
-    url:"https://tally.so/r/ODAKrA",
-    notes:"Fully filled and submitted via Tally. Confirmation: 'Thanks for completing this form!' — detailed answers about jams.zone, AI workflow, state management.",
-    urgent:false
-  },
-  {
-    id:3, company:"Douro Labs", role:"Design Lead",
-    status:"submitted", date:"2026-03-16", method:"Ashby", salary:"",
-    url:"https://jobs.ashbyhq.com/dourolabs.xyz/b40f164c-18fc-4cd5-8899-553758c86573",
-    notes:"Submitted via Ashby. Application confirmed: 'Your application was successfully submitted.' Porto office connection mentioned in cover answers.",
-    urgent:false
-  },
-  {
-    id:4, company:"Brave", role:"Software Engineer UI (Sr.)",
-    status:"submitted", date:"2026-03-16", method:"Greenhouse", salary:"",
-    url:"https://job-boards.greenhouse.io/brave/jobs/7636723",
-    notes:"Submitted via Greenhouse. Confirmed: 'Thank you for applying with Brave. Your application has been received.' Remote worldwide.",
-    urgent:false
-  },
-  {
-    id:5, company:"FS Studio", role:"WordPress Web Developer",
-    status:"submitted", date:"2026-03-17", method:"Ashby", salary:"$3500/month",
-    url:"https://jobs.ashbyhq.com/fs-studio/92ba03c7-b5cc-40bb-abc6-e8e5b3c5cfa8",
-    notes:"Submitted today by Tuti. Name, email, CV, availability (40h/week), rate ($3500/month) all filled. Application confirmed.",
-    urgent:false
-  },
-
-
-
-  // ─── NEEDS YOUR LOGIN ────────────────────────────────────────
-  {
-    id:14, company:"Growmodo", role:"Graphic Designer / AI Specialist",
-    status:"login", date:"2026-03-16", method:"Growmodo careers (hCaptcha)", salary:"",
-    url:"https://careers.growmodo.com/o/graphic-designer-ai-expert/c/new",
-    notes:"Form 100% pre-filled by Tuti (name, email, phone, LinkedIn, portfolio, CV uploaded, legal accepted). Blocked by hCaptcha only. Open URL and solve captcha to submit.",
-    urgent:false
-  },
-  {
-    id:15, company:"Represent Studio", role:"UI Designer for Motion & Animation",
-    status:"login", date:"2026-03-16", method:"Dribbble", salary:"$3500–5000/month",
-    url:"https://dribbble.com/jobs/301529-UI-Designer-for-Motion-Animation",
-    notes:"Requires logged-in Dribbble account. Figma required, motion design a bonus. Apply by sharing portfolio examples.",
-    urgent:false
-  },
-  {
-    id:16, company:"ContrastUX", role:"Freelance Design Systems Designer",
-    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
-    url:"https://dribbble.com/jobs/301397-Freelance-Design-Systems-Designer",
-    notes:"Requires Dribbble account. Role explicitly mentions Figma, Cursor, Claude Code, AI workflows — perfect match.",
-    urgent:false
-  },
-  {
-    id:17, company:"ContrastUX", role:"Freelance AI Prototype Designer",
-    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
-    url:"https://dribbble.com/jobs/275394-Freelance-AI-Prototype-Designer",
-    notes:"Requires Dribbble account. Needs advanced Figma prototyping + AI tool usage examples.",
-    urgent:false
-  },
-  {
-    id:18, company:"GetTruckDrivers.com", role:"Brand & UI/UX Designer",
-    status:"login", date:"2026-03-16", method:"Dribbble", salary:"",
-    url:"https://dribbble.com/jobs/303278-Brand-UI-UX-Designer",
-    notes:"Requires Dribbble account. Figma-to-production, landing pages, full design ownership.",
-    urgent:false
-  },
-  {
-    id:19, company:"BetterMe", role:"AI Creative Designer",
-    status:"login", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
-    url:"https://weworkremotely.com/remote-jobs/betterme-ai-creative-designer",
-    notes:"Requires WeWorkRemotely account to apply.",
-    urgent:false
-  },
-  {
-    id:20, company:"Influee", role:"Product & Marketing Designer",
-    status:"login", date:"2026-03-16", method:"Wellfound", salary:"€38k–55k",
-    url:"https://wellfound.com/jobs/3975806-product-marketing-designer",
-    notes:"TOP PRIORITY. Form 95% filled by Tuti but Wellfound requires login. Log in at wellfound.com first then complete application. EU Remote.",
-    urgent:false, urgentLabel:"Log in to Wellfound"
-  },
-
-  // ─── FOUND / QUEUE ───────────────────────────────────────────
-  {
-    id:21, company:"Kapa.ai (YC S23)", role:"Founding Designer",
-    status:"found", date:"2026-03-16", method:"YC Work at a Startup", salary:"$75k–125k + equity",
-    url:"https://www.ycombinator.com/companies/kapa-ai/jobs/lPYIksu-founding-designer",
-    notes:"EU Remote (PT not listed but worth asking). AI startup building assistants for dev tools. AI-native workflow is perfect fit. Apply via YC Work at a Startup profile.",
-    urgent:false
-  },
-  {
-    id:22, company:"Jiga (YC W21)", role:"Product Designer",
-    status:"closed", date:"2026-03-16", method:"YC Work at a Startup", salary:"$70k–130k + equity",
-    url:"https://www.ycombinator.com/companies/jiga/jobs/Cco7vyK-product-designer-remote-europe",
-    notes:"Listing gone (404 as of 2026-04-01).",
-    urgent:false
-  },
-  {
-    id:23, company:"Algrano", role:"Product Designer",
-    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
-    url:"https://weworkremotely.com/remote-jobs/algrano-product-designer",
-    notes:"Worldwide remote. B2B coffee marketplace, 50+ person company. Requires WWR account to get apply link.",
-    urgent:false
-  },
-  {
-    id:24, company:"TimeZest", role:"Product Designer",
-    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"",
-    url:"https://weworkremotely.com/remote-jobs/timezest-product-designer",
-    notes:"Anywhere worldwide. React, TypeScript, Tailwind stack. Try boards.greenhouse.io/timezest directly. May have passed deadline.",
-    urgent:false
-  },
-  {
-    id:25, company:"Stacksync (YC W24)", role:"Designer - Enterprise Software",
-    status:"found", date:"2026-03-16", method:"YC Jobs", salary:"",
-    url:"https://www.ycombinator.com/companies/stacksync",
-    notes:"YC-backed enterprise sync tool. Check YC jobs page for application link.",
-    urgent:false
-  },
-  {
-    id:26, company:"Search Dates", role:"Senior Product Designer",
-    status:"found", date:"2026-03-16", method:"WeWorkRemotely", salary:"$100k+",
-    url:"https://weworkremotely.com/remote-jobs/search-dates-senior-product-designer-1",
-    notes:"Anywhere worldwide. Senior level but worth a try. Requires WWR account.",
-    urgent:false
-  },
-  {
-    id:27, company:"Typeform", role:"Senior Product Designer - Integrations",
-    status:"found", date:"2026-03-17", method:"Greenhouse", salary:"",
-    url:"https://job-boards.greenhouse.io/typeform/jobs/7721487",
-    notes:"Second Typeform design role. Portugal remote. Same application structure as the AI role.",
-    urgent:false
-  },
-  {
-    id:28, company:"Typeform", role:"Product Designer Formless",
-    status:"found", date:"2026-03-17", method:"Greenhouse", salary:"",
-    url:"https://job-boards.greenhouse.io/typeform/jobs/7510869",
-    notes:"Third Typeform design role. Portugal remote. Same application structure.",
-    urgent:false
-  },
-
-  // ─── AI-NATIVE / AGENTIC CODING ROLES ───────────────────────
-  {
-    id:31, company:"Toku", role:"Full-Stack Software Engineer",
-    status:"found", date:"2026-03-17", method:"RemoteOK", salary:"",
-    url:"https://remoteok.com/remote-jobs/remote-full-stack-software-engineer-toku-1128172",
-    notes:"Explicitly mentions Cursor as a team tool: 'Hands-on with AI-assisted development (Copilot, Cursor, Devin). Experience with Cursor is a plus, we use it as a team.' TypeScript + React/Next.js + Node.js + Postgres. Worldwide remote. PERFECT AI-native fit.",
-    urgent:false
-  },
-  {
-    id:32, company:"A.Team", role:"Senior Independent AI Engineer / Architect",
-    status:"found", date:"2026-03-17", method:"Remotive", salary:"$120–$170/hr",
-    url:"https://remotive.com/remote-jobs/software-development/senior-independent-ai-engineer-architect-1919266",
-    notes:"Invite-only network for senior builders. Contract missions with Fortune 500s and top startups. Americas + Europe eligible. $120–170/hr, you keep 100%. LLMs, AI agents, NLP, ML infra. Apply at a.team to join the network.",
-    urgent:false
-  },
-  {
-    id:33, company:"XXIX (garden3d)", role:"Senior Product Designer",
-    status:"found", date:"2026-03-17", method:"Remotive", salary:"$85–$150/hr contract",
-    url:"https://remotive.com/remote-jobs/design/senior-product-designer-2088647",
-    notes:"Worker-owned creative collective. Clients: Google, Stripe, Figma, Mozilla, MIT. AI-enabled interfaces + IoT + digital products. Worldwide remote contract. $85–150/hr. Portfolio-driven application.",
-    urgent:false
-  },
-  {
-    id:34, company:"Sendbird", role:"AI Agent Engineer, Internal Operations",
-    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$150k–$190k",
-    url:"https://www.workatastartup.com/jobs",
-    notes:"YC W16. Building AI agents. San Mateo CA but worth checking remote options. Apply via YC Work at a Startup profile.",
-    urgent:false
-  },
-  {
-    id:35, company:"Varos (YC S21)", role:"Senior Full Stack Engineer",
-    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$90k–$150k",
-    url:"https://www.workatastartup.com/jobs",
-    notes:"AI Business Analysts to gather requirements and optimize processes. Remote US/Israel. Apply via YC Work at a Startup.",
-    urgent:false
-  },
-  {
-    id:36, company:"Alinea (YC W21)", role:"Founding AI Engineer",
-    status:"found", date:"2026-03-17", method:"YC Work at a Startup", salary:"$160k–$200k",
-    url:"https://www.workatastartup.com/jobs",
-    notes:"Automated investing for next generation. Full stack AI founding engineer role. New York but check remote. Apply via YC Work at a Startup.",
-    urgent:false
-  },
-
   // ─── WISE PIRATES ─────────────────────────────────────────────
   {
     id:37, company:"Wise Pirates", role:"Agentic & Low-Code Specialist",
@@ -349,17 +157,22 @@ const JOBS = [
     notes:"2 interview rounds completed. Test score: 16/30. Waiting for response. Porto hybrid.",
     urgent:false
   },
-
-  // ─── HITACHI SOLUTIONS (2026-03-03) ──────────────────────────
   {
-    id:42, company:"Hitachi Solutions", role:"UX Design Graduate",
-    status:"submitted", date:"2026-03-03", method:"Online", salary:"",
-    url:"",
-    notes:"Applied online.",
+    id:38, company:"Wise Pirates", role:"AI Agents Specialist",
+    status:"found", date:"2026-03-30", method:"Factorial HR", salary:"",
+    url:"https://wisepirates.factorialhr.pt/job_posting/ai-agents-specialist-274578",
+    notes:"Porto hybrid. Sibling role to the Agentic & Low-Code position already in interview. LangChain, N8N, LLM orchestration. Worth applying in parallel.",
+    urgent:false
+  },
+  {
+    id:41, company:"Wise Pirates", role:"Process Automation Specialist (Low-Code / No-Code & AI)",
+    status:"found", date:"2026-03-30", method:"Factorial HR", salary:"",
+    url:"https://wisepirates.factorialhr.pt/job_posting/process-automation-specialist-low-code-no-code-ai-workflows-260715",
+    notes:"Porto hybrid. n8n, Make, Zapier + AI workflow automation. Part of Wise Pirates' 70-hire push in 2026.",
     urgent:false
   },
 
-  // ─── PRIORITY — APPLY THIS WEEK (2026-04-01) ──────────────────
+  // ─── SUBMITTED (2026-04-01) ────────────────────────────────────
   {
     id:43, company:"JP HR Partners", role:"Vibe Coder / Creative Technologist",
     status:"submitted", date:"2026-04-01", method:"Email", salary:"TBD",
@@ -367,6 +180,8 @@ const JOBS = [
     notes:"Email sent to recrutamento@jp-hrpartners.com. AI-first builder, Cursor, Next.js, creative web experiences.",
     urgent:false
   },
+
+  // ─── PRIORITY — APPLY THIS WEEK (2026-04-01) ──────────────────
   {
     id:44, company:"Superside", role:"AI Creative",
     status:"found", date:"2026-04-01", method:"careers.superside.com", salary:"TBD",
@@ -407,14 +222,14 @@ const JOBS = [
   {
     id:49, company:"Pixelmatters", role:"(Check open roles)",
     status:"found", date:"2026-04-01", method:"pixelmatters.com", salary:"TBD",
-    url:"https://www.pixelmatters.com/about-us",
+    url:"https://www.pixelmatters.com/careers",
     notes:"Porto hybrid. Design + engineering studio, Next.js/React, ~40 people. Check open roles on their site.",
     urgent:false
   },
   {
     id:50, company:"Significa", role:"(Check open roles)",
     status:"found", date:"2026-04-01", method:"significa.co", salary:"TBD",
-    url:"https://significa.co",
+    url:"https://significa.co/careers",
     notes:"Porto hybrid. Digital product agency, design-forward, ~30 people. Check open roles.",
     urgent:false
   },
@@ -430,54 +245,6 @@ const JOBS = [
     status:"found", date:"2026-04-01", method:"flowremote.io", salary:"TBD",
     url:"https://www.flowremote.io/jobs/web-designer-developer-webflow-framer-at-ninvio",
     notes:"Remote. 2+ years Webflow/Framer, responsive design. Strong fit.",
-    urgent:false
-  },
-  {
-    id:38, company:"Wise Pirates", role:"AI Agents Specialist",
-    status:"found", date:"2026-03-30", method:"Factorial HR", salary:"",
-    url:"https://wisepirates.factorialhr.pt/job_posting/ai-agents-specialist-274578",
-    notes:"Porto hybrid. Sibling role to the Agentic & Low-Code position already in interview. LangChain, N8N, LLM orchestration. Worth applying in parallel.",
-    urgent:false
-  },
-  {
-    id:41, company:"Wise Pirates", role:"Process Automation Specialist (Low-Code / No-Code & AI)",
-    status:"found", date:"2026-03-30", method:"Factorial HR", salary:"",
-    url:"https://wisepirates.factorialhr.pt/job_posting/process-automation-specialist-low-code-no-code-ai-workflows-260715",
-    notes:"Porto hybrid. n8n, Make, Zapier + AI workflow automation. Part of Wise Pirates' 70-hire push in 2026.",
-    urgent:false
-  },
-
-  // ─── MOBIDEA (2026-03-30) ─────────────────────────────────────
-  {
-    id:39, company:"Mobidea", role:"AI Manager",
-    status:"found", date:"2026-03-30", method:"Landing.Jobs", salary:"€2,200–€2,500/mo + bonus",
-    url:"https://landing.jobs/at/mobidea/ai-manager",
-    notes:"Lisbon hybrid (2 days office Amoreiras, 3 remote). Lead AI integration across the company: MCP servers, AI bots, n8n, Airtable, HubSpot, Anthropic, OpenAI. Ship real AI products, not just prototypes. Reports to CEO. Nice-to-haves match perfectly: Telegram bots, LLM-generated creatives, RAG, prompt engineering.",
-    urgent:false
-  },
-
-  // ─── CLOUDFLARE INTERN (2026-03-30) ──────────────────────────
-  {
-    id:40, company:"Cloudflare", role:"Data & Technology — Operations & AI Innovation Intern (Summer 2026)",
-    status:"closed", date:"2026-03-30", method:"Direct / Built In", salary:"",
-    url:"https://builtin.com/job/data-and-technology-operations-and-ai-innovation-intern-summer-2026/7303049",
-    notes:"Listing gone (404 as of 2026-04-01). Likely filled.",
-    urgent:false
-  },
-
-  // ─── CLOSED ──────────────────────────────────────────────────
-  {
-    id:29, company:"Everywhen", role:"Junior Web Developer",
-    status:"closed", date:"2026-03-17", method:"LinkedIn", salary:"",
-    url:"https://www.linkedin.com/jobs/view/4383092984/",
-    notes:"No longer accepting applications.",
-    urgent:false
-  },
-  {
-    id:30, company:"Fuelerate", role:"CRO-Focused Web Designer",
-    status:"closed", date:"2026-03-17", method:"LinkedIn", salary:"",
-    url:"https://www.linkedin.com/jobs/view/4361480726/",
-    notes:"No longer accepting applications.",
     urgent:false
   },
 ];
