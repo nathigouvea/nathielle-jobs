@@ -168,11 +168,18 @@ const JOBS = [
     id:41, company:"Wise Pirates", role:"Process Automation Specialist (Low-Code / No-Code & AI)",
     status:"found", date:"2026-03-30", method:"Factorial HR", salary:"",
     url:"https://wisepirates.factorialhr.pt/job_posting/process-automation-specialist-low-code-no-code-ai-workflows-260715",
-    notes:"Porto hybrid. n8n, Make, Zapier + AI workflow automation. Part of Wise Pirates' 70-hire push in 2026.",
+    notes:"Porto hybrid. n8n, Make, Zapier + AI workflow automation.",
     urgent:false
   },
 
   // ─── SUBMITTED ────────────────────────────────────────────────
+  {
+    id:42, company:"Hitachi Solutions", role:"UX Design Graduate",
+    status:"submitted", date:"2026-03-03", method:"Online", salary:"",
+    url:"",
+    notes:"Applied online.",
+    urgent:false
+  },
   {
     id:43, company:"JP HR Partners", role:"Vibe Coder / Creative Technologist",
     status:"submitted", date:"2026-04-01", method:"Email", salary:"TBD",
@@ -186,28 +193,28 @@ const JOBS = [
     id:53, company:"Adaptify SEO", role:"Vibe Coder",
     status:"found", date:"2026-04-01", method:"adaptify.ai", salary:"TBD + bonus",
     url:"https://www.adaptify.ai/jobs/vibe-coder",
-    notes:"Closed as of 2026-04-01.",
+    notes:"Remote worldwide, async. Python, FastAPI, React, Next.js, LLMs, prompt engineering. 28 days PTO.",
     urgent:false
   },
   {
     id:44, company:"Superside", role:"AI Creative",
     status:"found", date:"2026-04-01", method:"careers.superside.com", salary:"TBD",
     url:"https://careers.superside.com/jobs/ai-creative",
-    notes:"Remote (60+ countries). 3-5 yrs design, Figma, Adobe, generative AI tools. 700+ people.",
+    notes:"Remote (60+ countries). 3-5 yrs design, Figma, Adobe, generative AI tools.",
     urgent:false
   },
   {
     id:54, company:"Dolby", role:"Vibe Coding Intern",
     status:"found", date:"2026-04-01", method:"vibecodecareers.com", salary:"TBD",
     url:"https://vibecodecareers.com/jobs/",
-    notes:"Wroclaw, Poland (hybrid). Entry-level, vibe coding, hybrid in Europe.",
+    notes:"Wroclaw, Poland (hybrid). Entry-level, vibe coding.",
     urgent:false
   },
   {
     id:55, company:"Photoroom", role:"Senior Growth Marketing",
     status:"found", date:"2026-04-01", method:"goodvibecode.com", salary:"€70K-90K/yr",
     url:"https://www.goodvibecode.com/",
-    notes:"Remote (PT, ES, FR, DE, UK, IT, IE). AI-driven experiments, Cursor + Claude, 'vibe coding' mentioned in job desc.",
+    notes:"Remote (PT, ES, FR, DE, UK, IT, IE). AI-driven experiments, Cursor + Claude, vibe coding in job desc.",
     urgent:false
   },
 
@@ -251,7 +258,7 @@ const JOBS = [
     id:60, company:"Pixelmatters", role:"Product Designer",
     status:"found", date:"2026-04-01", method:"pixelmatters.com", salary:"TBD",
     url:"https://www.pixelmatters.com/careers",
-    notes:"Porto (remote-first). Mid-level product design. Same great studio as Junior role.",
+    notes:"Porto (remote-first). Mid-level product design.",
     urgent:false
   },
 
@@ -284,49 +291,7 @@ const JOBS = [
     notes:"Remote. 2+ years Webflow/Framer, responsive design.",
     urgent:false
   },
-];
 
-const STATUS_LABEL = { interviewed:"🎤 Interviewed", submitted:"✅ Submitted", action:"⚠️ Needs action", login:"🔑 Needs login", found:"🔍 Found", closed:"❌ Closed" };
-const SECTION_ORDER = ["interviewed","submitted","action","login","found","closed"];
-const SECTION_TITLES = { interviewed:"Interviewed — awaiting response", submitted:"Submitted", action:"Needs your action", login:"Needs your login", found:"Found — in queue to apply", closed:"Closed / No longer accepting" };
-
-let currentFilter = "all";
-let searchQuery = "";
-
-function render() {
-  const main = document.getElementById("main-content");
-
-  let filtered = JOBS.filter(j => {
-    const matchFilter = currentFilter === "all" || j.status === currentFilter;
-    const q = searchQuery.toLowerCase();
-    const matchSearch = !q || j.company.toLowerCase().includes(q) || j.role.toLowerCase().includes(q) || j.notes.toLowerCase().includes(q);
-    return matchFilter && matchSearch;
-  });
-
-  // counts (always full)
-  const counts = { interviewed:0, submitted:0, action:0, login:0, found:0, closed:0 };
-  JOBS.forEach(j => counts[j.status]++);
-  document.getElementById("cnt-interviewed").textContent = counts.interviewed;
-  document.getElementById("cnt-submitted").textContent = counts.submitted;
-  document.getElementById("cnt-action").textContent = counts.action;
-  document.getElementById("cnt-login").textContent = counts.login;
-  document.getElementById("cnt-found").textContent = counts.found;
-  document.getElementById("cnt-closed").textContent = counts.closed;
-  document.getElementById("cnt-total").textContent = JOBS.length;
-
-  // urgent banner
-  const urgents = JOBS.filter(j => j.urgent);
-  const banner = document.getElementById("urgent-banner");
-  if (urgents.length) {
-    banner.style.display = "block";
-    document.getElementById("urgent-items").innerHTML = urgents.map(j =>
-      `<span class="urgent-chip">⚡ ${j.company}: ${j.urgentLabel}</span>`
-    ).join("");
-  }
-
-  // cards
-  let html = "";
-  const sections = currentFilter === "all" ? SECTION_ORDER : [currentFilter
   // ─── FRONTEND DEVELOPER (PORTUGAL) ───────────────────────────
   {
     id:61, company:"Dashlane", role:"Software Engineer - Web Frontend",
@@ -357,7 +322,7 @@ function render() {
     urgent:false
   },
 
-  // ─── REMOTE DESIGN (EUROPE) ────────────────────────────────────
+  // ─── REMOTE DESIGN (EUROPE) ───────────────────────────────────
   {
     id:65, company:"DOHE", role:"UI/UX Designer",
     status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
@@ -369,7 +334,7 @@ function render() {
     id:66, company:"DoiT", role:"UX Designer",
     status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
     url:"https://remoteineurope.com/categories/design",
-    notes:"Remote (Europe). 4+ yrs experience (stretch role). Check RemoteInEurope.",
+    notes:"Remote (Europe). 4+ yrs experience (stretch role).",
     urgent:false
   },
   {
@@ -383,26 +348,20 @@ function render() {
     id:68, company:"CrazyGames", role:"Graphic Designer (Marketing)",
     status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
     url:"https://remoteineurope.com/categories/design",
-    notes:"Remote (Europe, GMT±6). Gaming company. 3+ yrs design.",
+    notes:"Remote (Europe, GMT+/-6). Gaming company. 3+ yrs design.",
     urgent:false
   },
 
-  // ─── LOW-CODE / AUTOMATION (BACKUP) ───────────────────────────
+  // ─── LOW-CODE / AUTOMATION (BACKUP) ──────────────────────────
   {
     id:48, company:"ATLAS Analytics", role:"Vibe Coder / Software Developer",
     status:"found", date:"2026-04-01", method:"Wellfound", salary:"TBD",
     url:"https://wellfound.com/jobs/2226934-vibe-coder-software-developer-low-code-no-code",
-    notes:"Remote (Europe). Low-code + AI. Explicitly 'vibe coder' title.",
-    urgent:false
-  },
-  {
-    id:42, company:"Hitachi Solutions", role:"UX Design Graduate",
-    status:"submitted", date:"2026-03-03", method:"Online", salary:"",
-    url:"",
-    notes:"Applied online.",
+    notes:"Remote (Europe). Low-code + AI. Explicitly vibe coder title.",
     urgent:false
   },
 ];
+
   sections.forEach(sec => {
     const jobs = filtered.filter(j => j.status === sec);
     if (!jobs.length) return;
