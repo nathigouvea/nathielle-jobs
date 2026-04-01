@@ -69,6 +69,7 @@
     .role { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
     .badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: 500; white-space: nowrap; flex-shrink: 0; }
+    .badge.interviewed{ background: var(--blue-dim); color: var(--blue); }
     .badge.submitted  { background: var(--green-dim); color: var(--green); }
     .badge.action     { background: var(--amber-dim); color: var(--amber); }
     .badge.login      { background: var(--blue-dim); color: var(--blue); }
@@ -112,6 +113,7 @@
 </header>
 
 <div class="stats">
+  <div class="stat blue"><div class="stat-num" id="cnt-interviewed">0</div><div class="stat-label">Interviewed</div></div>
   <div class="stat green"><div class="stat-num" id="cnt-submitted">0</div><div class="stat-label">Submitted</div></div>
   <div class="stat amber"><div class="stat-num" id="cnt-action">0</div><div class="stat-label">Needs action</div></div>
   <div class="stat blue"><div class="stat-num" id="cnt-login">0</div><div class="stat-label">Needs login</div></div>
@@ -130,6 +132,7 @@
 <div class="controls">
   <span style="font-size:0.75rem;color:var(--text-dim)">Filter:</span>
   <button class="filter-btn active" data-filter="all">All</button>
+  <button class="filter-btn" data-filter="interviewed">🎤 Interviewed</button>
   <button class="filter-btn" data-filter="submitted">✅ Submitted</button>
   <button class="filter-btn" data-filter="action">⚠️ Needs action</button>
   <button class="filter-btn" data-filter="login">🔑 Needs login</button>
@@ -397,10 +400,28 @@ const JOBS = [
   // ─── WISE PIRATES ─────────────────────────────────────────────
   {
     id:37, company:"Wise Pirates", role:"Agentic & Low-Code Specialist",
-    status:"submitted", date:"2026-03-17", method:"Factorial HR", salary:"",
+    status:"interviewed", date:"2026-03-26", method:"Factorial HR", salary:"",
     url:"https://wisepirates.factorialhr.pt/apply/agentic-low-code-specialist-274577",
-    notes:"Applied. Interview secured. Porto hybrid. Currently in the interview process.",
+    notes:"2 interview rounds completed. Test score: 16/30. Waiting for response. Porto hybrid.",
     urgent:false
+  },
+
+  // ─── HITACHI SOLUTIONS (2026-03-03) ──────────────────────────
+  {
+    id:42, company:"Hitachi Solutions", role:"UX Design Graduate",
+    status:"submitted", date:"2026-03-03", method:"Online", salary:"",
+    url:"",
+    notes:"Applied online.",
+    urgent:false
+  },
+
+  // ─── JP HR PARTNERS ───────────────────────────────────────────
+  {
+    id:43, company:"JP HR Partners", role:"Vibe Coder",
+    status:"action", date:"2026-04-01", method:"Email", salary:"",
+    url:"",
+    notes:"Email ready to send. Apply via email.",
+    urgent:true, urgentLabel:"Send email"
   },
   {
     id:38, company:"Wise Pirates", role:"AI Agents Specialist",
@@ -452,9 +473,9 @@ const JOBS = [
   },
 ];
 
-const STATUS_LABEL = { submitted:"✅ Submitted", action:"⚠️ Needs action", login:"🔑 Needs login", found:"🔍 Found", closed:"❌ Closed" };
-const SECTION_ORDER = ["submitted","action","login","found","closed"];
-const SECTION_TITLES = { submitted:"Submitted", action:"Needs your action", login:"Needs your login", found:"Found — in queue to apply", closed:"Closed / No longer accepting" };
+const STATUS_LABEL = { interviewed:"🎤 Interviewed", submitted:"✅ Submitted", action:"⚠️ Needs action", login:"🔑 Needs login", found:"🔍 Found", closed:"❌ Closed" };
+const SECTION_ORDER = ["interviewed","submitted","action","login","found","closed"];
+const SECTION_TITLES = { interviewed:"Interviewed — awaiting response", submitted:"Submitted", action:"Needs your action", login:"Needs your login", found:"Found — in queue to apply", closed:"Closed / No longer accepting" };
 
 let currentFilter = "all";
 let searchQuery = "";
@@ -470,8 +491,9 @@ function render() {
   });
 
   // counts (always full)
-  const counts = { submitted:0, action:0, login:0, found:0, closed:0 };
+  const counts = { interviewed:0, submitted:0, action:0, login:0, found:0, closed:0 };
   JOBS.forEach(j => counts[j.status]++);
+  document.getElementById("cnt-interviewed").textContent = counts.interviewed;
   document.getElementById("cnt-submitted").textContent = counts.submitted;
   document.getElementById("cnt-action").textContent = counts.action;
   document.getElementById("cnt-login").textContent = counts.login;
