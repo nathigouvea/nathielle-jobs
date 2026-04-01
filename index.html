@@ -326,7 +326,76 @@ function render() {
 
   // cards
   let html = "";
-  const sections = currentFilter === "all" ? SECTION_ORDER : [currentFilter];
+  const sections = currentFilter === "all" ? SECTION_ORDER : [currentFilter
+  // ─── FRONTEND DEVELOPER (PORTUGAL) ───────────────────────────
+  {
+    id:61, company:"Dashlane", role:"Software Engineer - Web Frontend",
+    status:"found", date:"2026-04-01", method:"landing.jobs", salary:"TBD",
+    url:"https://landing.jobs/at/dashlane-pt/software-engineer-web-frontend",
+    notes:"Lisbon (hybrid). React, TypeScript. Password manager company.",
+    urgent:false
+  },
+  {
+    id:62, company:"Snyk", role:"Senior AI Engineer, Web",
+    status:"found", date:"2026-04-01", method:"landing.jobs", salary:"TBD",
+    url:"https://landing.jobs/jobs?c=2",
+    notes:"Lisbon (hybrid). AI + Next.js + TypeScript. Security company. Search Snyk on landing.jobs.",
+    urgent:false
+  },
+  {
+    id:63, company:"MailerLite", role:"Frontend (check open roles)",
+    status:"found", date:"2026-04-01", method:"Glassdoor/LinkedIn", salary:"TBD",
+    url:"https://www.glassdoor.com/Jobs/MailerLite-Jobs-E1780723.htm",
+    notes:"Porto office. Email marketing tool. Check Glassdoor or LinkedIn for current openings.",
+    urgent:false
+  },
+  {
+    id:64, company:"7Graus", role:"Web Developer",
+    status:"found", date:"2026-04-01", method:"Glassdoor/LinkedIn", salary:"TBD",
+    url:"https://www.linkedin.com/company/7graus/jobs/",
+    notes:"Porto. Portuguese digital media company. Check LinkedIn for current openings.",
+    urgent:false
+  },
+
+  // ─── REMOTE DESIGN (EUROPE) ────────────────────────────────────
+  {
+    id:65, company:"DOHE", role:"UI/UX Designer",
+    status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
+    url:"https://remoteineurope.com/categories/design",
+    notes:"Remote (global). UI/UX. Check RemoteInEurope design board.",
+    urgent:false
+  },
+  {
+    id:66, company:"DoiT", role:"UX Designer",
+    status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
+    url:"https://remoteineurope.com/categories/design",
+    notes:"Remote (Europe). 4+ yrs experience (stretch role). Check RemoteInEurope.",
+    urgent:false
+  },
+  {
+    id:67, company:"Canonical", role:"UX Designer - Infrastructure",
+    status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
+    url:"https://canonical.com/careers/6072086/apply",
+    notes:"Remote (EMEA). Ubuntu/Linux company. Portugal eligible.",
+    urgent:false
+  },
+  {
+    id:68, company:"CrazyGames", role:"Graphic Designer (Marketing)",
+    status:"found", date:"2026-04-01", method:"remoteineurope.com", salary:"TBD",
+    url:"https://remoteineurope.com/categories/design",
+    notes:"Remote (Europe, GMT±6). Gaming company. 3+ yrs design.",
+    urgent:false
+  },
+
+  // ─── LOW-CODE / AUTOMATION (BACKUP) ───────────────────────────
+  {
+    id:48, company:"ATLAS Analytics", role:"Vibe Coder / Software Developer",
+    status:"found", date:"2026-04-01", method:"Wellfound", salary:"TBD",
+    url:"https://wellfound.com/jobs/2226934-vibe-coder-software-developer-low-code-no-code",
+    notes:"Remote (Europe). Low-code + AI. Explicitly 'vibe coder' title.",
+    urgent:false
+  },
+];
   sections.forEach(sec => {
     const jobs = filtered.filter(j => j.status === sec);
     if (!jobs.length) return;
